@@ -1,28 +1,18 @@
 import React, { useState } from 'react';
 import { 
   CheckCircle2, 
-  XCircle, 
   ChevronDown, 
   ArrowRight, 
   Play, 
-  Scale, 
-  Target, 
   MessageSquare, 
-  Cpu, 
   Star,
   ShieldCheck,
-  Zap,
-  LayoutGrid,
   TrendingUp,
   CreditCard,
   Lock,
   FileText,
-  User,
-  Mail,
-  Phone,
   Headphones
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Components ---
 
@@ -42,19 +32,6 @@ const SectionHeading = ({ badge, title, subtitle, centered = true }: { badge?: s
   </div>
 );
 
-const FeatureCard = ({ icon: Icon, title, description }: { icon: any, title: string, description: string }) => (
-  <motion.div 
-    whileHover={{ y: -5 }}
-    className="glass-card p-8 flex flex-col items-center text-center group"
-  >
-    <div className="w-16 h-16 rounded-2xl bg-brand/10 flex items-center justify-center mb-6 group-hover:bg-brand/20 transition-colors">
-      <Icon className="w-8 h-8 text-brand" />
-    </div>
-    <h3 className="text-xl font-bold mb-3">{title}</h3>
-    <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
-  </motion.div>
-);
-
 interface TestimonialCardProps {
   name: string;
   role: string;
@@ -64,7 +41,7 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard = ({ name, role, content, rating = 5 }: TestimonialCardProps) => (
-  <div className="glass-card p-8 flex flex-col hover:border-brand/50 transition-colors duration-300 w-[300px] md:w-[450px] min-h-[350px] md:min-h-[450px] whitespace-normal">
+  <div className="glass-card p-8 flex flex-col hover:border-brand/50 transition-colors duration-300 w-[300px] md:w-[450px] min-h-[350px] md:min-h-[450px] whitespace-normal shrink-0">
     <div className="flex gap-1 mb-6">
       {[...Array(rating)].map((_, i) => (
         <Star key={i} className="w-5 h-5 fill-brand text-brand" />
@@ -96,20 +73,11 @@ const FAQItem = ({ question, answer }: { question: string, answer: string }) => 
         <span className="font-semibold md:text-lg">{question}</span>
         <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden"
-          >
-            <p className="pb-6 text-gray-400 leading-relaxed">
-              {answer}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isOpen && (
+        <div className="pb-6 text-gray-400 leading-relaxed">
+          {answer}
+        </div>
+      )}
     </div>
   );
 };
@@ -117,7 +85,6 @@ const FAQItem = ({ question, answer }: { question: string, answer: string }) => 
 const WhatsAppAnimation = () => {
   return (
     <div className="w-full max-w-sm mx-auto bg-[#0b141a] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-      {/* Header */}
       <div className="bg-[#202c33] p-4 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden">
           <img src="https://i.imgur.com/m7MGFCp.png" alt="JusIn Logo" className="w-8 h-8 object-contain" referrerPolicy="no-referrer" />
@@ -128,15 +95,8 @@ const WhatsAppAnimation = () => {
         </div>
       </div>
       
-      {/* Chat Area */}
       <div className="p-4 space-y-4 h-[400px] overflow-y-auto bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-repeat">
-        {/* User Message: PDF */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20, scale: 0.8 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-          className="flex justify-end"
-        >
+        <div className="flex justify-end">
           <div className="bg-[#005c4b] p-3 rounded-lg rounded-tr-none max-w-[80%] shadow-sm">
             <div className="flex items-center gap-2 bg-[#025144] p-2 rounded border border-white/5">
               <div className="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
@@ -149,15 +109,9 @@ const WhatsAppAnimation = () => {
             </div>
             <p className="text-[10px] text-right mt-1 opacity-60">14:15</p>
           </div>
-        </motion.div>
+        </div>
 
-        {/* System Message: Result */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20, scale: 0.8 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ delay: 3, duration: 0.5 }}
-          className="flex justify-start"
-        >
+        <div className="flex justify-start">
           <div className="bg-[#202c33] p-3 rounded-lg rounded-tl-none max-w-[90%] shadow-sm">
             <p className="text-xs font-bold text-brand mb-2">✅ Cálculo Concluído!</p>
             <div className="space-y-1 text-[11px]">
@@ -176,7 +130,7 @@ const WhatsAppAnimation = () => {
             </div>
             <p className="text-[10px] text-right mt-2 opacity-60">14:16</p>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
@@ -202,11 +156,7 @@ export default function App() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-brand/10 blur-[120px] rounded-full -z-10" />
           
           <div className="max-w-7xl mx-auto px-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div>
               <Badge className="mb-6">
                 <CheckCircle2 className="w-3 h-3" /> Mais de 1270 originadores já usaram
               </Badge>
@@ -220,7 +170,7 @@ export default function App() {
 
               {/* Video Mockup */}
               <div className="relative max-w-4xl mx-auto mb-16 group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-brand to-brand-dark rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-brand to-brand-dark rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                 <div className="relative glass-card overflow-hidden aspect-video flex items-center justify-center bg-black">
                   <img 
                     src="https://picsum.photos/seed/platform/1200/675" 
@@ -255,20 +205,15 @@ export default function App() {
                   <p className="text-sm text-gray-500 font-medium">+1270 usuários já usaram</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Features Section */}
-        {/* Features & Animation Section */}
         <section className="py-16 bg-white/[0.02]">
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
+              <div>
                 <SectionHeading 
                   badge="O QUE VOCÊ ENCONTRARÁ NA MÁQUINA"
                   title="Tecnologia de ponta para precificação de ativos judiciais"
@@ -307,17 +252,12 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
+              <div className="relative">
                 <div className="absolute inset-0 bg-brand/10 blur-[100px] rounded-full -z-10" />
                 <WhatsAppAnimation />
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -332,17 +272,9 @@ export default function App() {
             />
           </div>
 
-          {/* Infinite Marquee */}
+          {/* Marquee (Simplified CSS Animation) */}
           <div className="relative flex overflow-hidden py-4">
-            <motion.div 
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ 
-                ease: "linear", 
-                duration: 60, 
-                repeat: Infinity 
-              }}
-              className="flex gap-8 whitespace-nowrap"
-            >
+            <div className="animate-marquee flex gap-8">
               {[
                 { name: "Dr. Ribeiro Lima", role: "Advogado", content: "A ferramenta me mostrou caminhos estratégicos para precificar créditos que realmente funcionam. Excelente!" },
                 { name: "Dra. Barbara Azevedo", role: "Originadora de Créditos", content: "Estou muito satisfeita, consegui originar 10 precatórios novos em um mês com a agilidade da plataforma." },
@@ -357,7 +289,7 @@ export default function App() {
                 { name: "Dr. Marcos Silva", role: "Investidor", content: "Otimizei meu tempo em 80% na análise de carteiras do TJSP. Indispensável." },
                 { name: "Dra. Juliana Costa", role: "Consultora Jurídica", content: "Precisão absoluta nos cálculos. O WhatsApp facilita demais o dia a dia." },
                 { name: "Dr. Ricardo Santos", role: "Originador", content: "Finalmente uma solução que entende a complexidade dos precatórios estaduais." }
-              ]).map((t: any, i: number) => (
+              ]).map((t, i) => (
                 <TestimonialCard 
                   key={i} 
                   name={t.name}
@@ -365,9 +297,8 @@ export default function App() {
                   content={t.content}
                 />
               ))}
-            </motion.div>
+            </div>
             
-            {/* Gradient Overlays for smooth fade */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-bg-dark to-transparent z-10" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-bg-dark to-transparent z-10" />
           </div>
